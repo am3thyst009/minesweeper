@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<meta content="#070b13" name="theme-color"/>
+<title>Сапёр — Смартап</title>
+<link href="./styles.css" rel="stylesheet"/>
+</head>
+<body>
+<main aria-label="Сапёр" class="app">
+<section aria-label="Главное меню" class="screen active" id="menuScreen">
+<div class="hero">
+<div aria-hidden="true" class="hero-grid">
+<span></span><span></span><span></span><span></span><span></span>
+<span></span><span></span><span></span><span></span><span></span>
+<span></span><span></span><span></span><span></span><span></span>
+<span></span><span></span><span></span><span></span><span></span>
+<span></span><span></span><span></span><span></span><span></span>
+</div>
+<div aria-hidden="true" class="hero-icon" id="heroIcon"></div>
+<h1>Сапёр</h1>
+<p class="subtitle">Минное поле ждёт. Откройте безопасные клетки, расставьте флаги и дойдите до рекорда.</p>
+</div>
+<div class="card stack" style="margin-top:14px;">
+<button class="btn btn-secondary" hidden="" id="continueBtn" type="button">Продолжить партию</button>
+<button class="btn btn-primary" id="playBtn" type="button">Новая игра</button>
+<div aria-label="Выбор уровня" class="level-grid">
+<button class="level-btn active" data-level="easy" type="button">Лёгкий<span>8×8 / 10</span></button>
+<button class="level-btn" data-level="medium" type="button">Средний<span>16×16 / 40</span></button>
+<button class="level-btn" data-level="hard" type="button">Сложный<span>16×30 / 99</span></button>
+</div>
+<div class="grid-2">
+<button class="btn btn-secondary" data-screen="recordsScreen" type="button">Рекорды</button>
+<button class="btn btn-secondary" data-screen="statsScreen" type="button">Статистика</button>
+<button class="btn btn-secondary" id="menuSettingsBtn" type="button">Настройки</button>
+<button class="btn btn-secondary" id="menuRulesBtn" type="button">Правила</button>
+</div>
+<button class="btn btn-secondary" id="menuHelpBtn" type="button">Голосовое управление</button>
+</div>
+<p class="hint">Тап — открыть клетку. Удержание или режим флага — поставить маркер.</p>
+</section>
+<section aria-label="Игра" class="screen" id="gameScreen">
+<div class="card">
+<div class="topbar">
+<button aria-label="Пауза" class="icon-btn" id="pauseBtn" type="button"></button>
+<h2 class="screen-title" id="gameTitle">Лёгкий уровень</h2>
+<button aria-label="Режим флага" class="icon-btn" id="flagModeBtn" type="button"></button>
+<button aria-label="Новая игра" class="icon-btn" id="newGameBtn" type="button"></button>
+</div>
+<div class="game-stats">
+<div class="stat">
+<div class="stat-label">Время</div>
+<div class="stat-value"><span id="timer">0</span> сек</div>
+</div>
+<div class="stat">
+<div class="stat-label">Мины</div>
+<div class="stat-value"><span id="minesLeft">10</span></div>
+</div>
+<div class="stat">
+<div class="stat-label">Рекорд</div>
+<div class="stat-value"><span id="bestTime">—</span></div>
+</div>
+</div>
+<div class="status" id="status" role="status">Откройте поле и не заденьте мину. Удерживайте клетку, чтобы поставить флаг.</div>
+<div class="board-wrap" id="boardWrap">
+<div aria-label="Игровое поле" class="board" id="board" role="grid"></div>
+</div>
+</div>
+</section>
+<section aria-label="Рекорды" class="screen" id="recordsScreen">
+<div class="card stack">
+<div class="topbar simple">
+<button aria-label="Назад" class="icon-btn" data-screen="menuScreen" type="button"></button>
+<h2 class="screen-title">Рекорды</h2>
+<span></span>
+</div>
+<div class="list" id="recordsList"></div>
+<button class="btn btn-danger" id="clearRecordsBtn" type="button">Сбросить рекорды</button>
+</div>
+</section>
+<section aria-label="Статистика" class="screen" id="statsScreen">
+<div class="card stack">
+<div class="topbar simple">
+<button aria-label="Назад" class="icon-btn" data-screen="menuScreen" type="button"></button>
+<h2 class="screen-title">Статистика</h2>
+<span></span>
+</div>
+<div class="list" id="statsList"></div>
+<button class="btn btn-danger" id="clearStatsBtn" type="button">Сбросить статистику</button>
+</div>
+</section>
+</main>
+<div aria-hidden="true" aria-modal="true" class="modal-backdrop" id="modalBackdrop" role="dialog">
+<div class="modal">
+<div class="modal-header">
+<div>
+<h2 class="modal-title" id="modalTitle">Пауза</h2>
+<p class="modal-subtitle" id="modalSubtitle"></p>
+</div>
+<button aria-label="Закрыть" class="modal-close" id="modalCloseBtn" type="button">×</button>
+</div>
+<div id="modalBody"></div>
+</div>
+</div>
+<div aria-hidden="true" class="auto-pause-overlay" id="autoPauseOverlay">
+<div class="auto-pause-card">Пауза</div>
+</div>
+<div aria-live="polite" class="toast" id="toast" role="status"></div>
+<div aria-hidden="true" class="confetti-layer" id="confettiLayer"></div>
+<audio id="bgMusic" loop preload="auto">
+  <source src="audio/background_music.mp3" type="audio/mpeg"> 
+</audio>
+<script src="https://unpkg.com/@salutejs/client@1.0.0/umd/assistant.production.min.js"></script>
+
+  <script src="./js/config.js"></script>
+  <script src="./js/storage.js"></script>
+  <script src="./js/state.js"></script>
+  <script src="./js/audio.js"></script>
+  <script src="./js/game.js"></script>
+  <script src="./js/salute.js"></script>
+  <script src="./js/app.js"></script>
+
+</body>
+</html>
