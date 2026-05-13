@@ -1164,6 +1164,7 @@ function showScreen(screenId) {
       if (state.gameStatus !== "playing" || state.currentModal) return;
       state.gameStatus = "paused";
       stopTimer();
+      AudioEngine.syncMusic();
       updateAllCells();
       showAutoPauseOverlay();
     }
