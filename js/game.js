@@ -418,7 +418,6 @@ function showScreen(screenId) {
       closeModal();
       showScreen("gameScreen");
       newGame(levelName);
-      unlockAudio();
     }
 
     function continueGame() {
@@ -429,6 +428,7 @@ function showScreen(screenId) {
     }
 
     function newGame(levelName = state.level) {
+      state.lifecycleMusicPaused = false;
       state.gameId++;
       state.level = levelName;
       const level = LEVELS[state.level];
@@ -632,12 +632,7 @@ function showScreen(screenId) {
         cell.isMine = mines.has(cellKey(cell.row, cell.col));
       });
     }
-
-    function simulateOpeningSize(startCell) {
-      return analyzeFirstOpening(startCell).size;
-    }
-
-    function getEmptyOpeningAnalysis() {
+function getEmptyOpeningAnalysis() {
       return {
         size: 0,
         zeroCount: 0,
@@ -841,7 +836,6 @@ function showScreen(screenId) {
 
     function openCell(cell) {
       if (!canInteractWithBoard() || cell.isFlagged) return;
-      unlockAudio();
 
       if (state.gameStatus === "idle") startGameSession(cell);
 
@@ -904,6 +898,7 @@ function showScreen(screenId) {
     function canInteractWithBoard() { return ["idle", "playing"].includes(state.gameStatus) && state.currentScreen === "gameScreen" && !state.currentModal; }
 
     function startGameSession(firstSafeCell) {
+      state.lifecycleMusicPaused = false;
       state.gameStatus = "playing";
       state.activeSession = true;
       placeMines(firstSafeCell);
@@ -981,7 +976,6 @@ function showScreen(screenId) {
 
     function toggleFlag(cell) {
       if (!canInteractWithBoard() || cell.isOpen) return;
-      unlockAudio();
       // Флаг до первого открытия не запускает таймер и не генерирует мины.
       const level = LEVELS[state.level];
       const wantsToPlaceFlag = !cell.isFlagged;
@@ -1021,6 +1015,7 @@ function showScreen(screenId) {
 
     function winGame() {
       state.gameStatus = "won";
+      state.lifecycleMusicPaused = false;
       state.activeSession = false;
       stopTimer();
       AudioEngine.syncMusic();
@@ -1059,6 +1054,7 @@ function showScreen(screenId) {
       ], { duration: 220 });
       pulseBoard("lose");
       state.gameStatus = "lost";
+      state.lifecycleMusicPaused = false;
       state.activeSession = false;
       stopTimer();
       AudioEngine.syncMusic();
@@ -1128,49 +1124,26 @@ function showScreen(screenId) {
       return Math.hypot(cell.row - originCell.row, cell.col - originCell.col);
     }
 
-    function resumeFromAutoPause(event) {
-      if (!(state.gameStatus === "paused" && state.inlinePauseResumeTap)) return false;
-
-      if (event) {
-        event.preventDefault();
-        event.stopPropagation();
-        event.stopImmediatePropagation?.();
-      }
-
-      clearLongPressTimer();
-      state.longPressTriggered = false;
-      state.suppressBoardInputUntil = Date.now() + 650;
-      resumeGame();
-      return true;
-    }
-
     function isBoardInputSuppressed() {
       return Date.now() < state.suppressBoardInputUntil;
     }
 
-    function showAutoPauseOverlay() {
-      state.inlinePauseResumeTap = true;
-      el.autoPauseOverlay?.classList.add("show");
-      el.autoPauseOverlay?.setAttribute("aria-hidden", "false");
-    }
-
-    function hideAutoPauseOverlay() {
-      state.inlinePauseResumeTap = false;
-      el.autoPauseOverlay?.classList.remove("show");
-      el.autoPauseOverlay?.setAttribute("aria-hidden", "true");
-    }
-
     function autoPauseGame() {
-      if (state.gameStatus !== "playing" || state.currentModal) return;
-      state.gameStatus = "paused";
-      stopTimer();
+      state.lifecycleMusicPaused = true;
+
+      if (state.currentScreen === "gameScreen" && state.gameStatus === "playing") {
+        state.gameStatus = "paused";
+        stopTimer();
+        el.boardWrap.classList.add("paused");
+        updateAllCells();
+        if (!state.currentModal) openPauseModal();
+      }
+
       AudioEngine.syncMusic();
-      updateAllCells();
-      showAutoPauseOverlay();
     }
 
     function pauseGame() {
-      hideAutoPauseOverlay();
+      state.lifecycleMusicPaused = false;
       if (state.gameStatus !== "playing") { openPauseModal(); return; }
       state.gameStatus = "paused";
       stopTimer();
@@ -1187,7 +1160,7 @@ function showScreen(screenId) {
       }
 
       closeModal();
-      hideAutoPauseOverlay();
+      state.lifecycleMusicPaused = false;
       state.gameStatus = "playing";
       startTimer();
       AudioEngine.syncMusic();
@@ -1196,7 +1169,7 @@ function showScreen(screenId) {
     }
 
     function leaveGameToMenu() {
-      hideAutoPauseOverlay();
+      state.lifecycleMusicPaused = false;
       if (state.gameStatus === "playing") { state.gameStatus = "paused"; stopTimer(); }
       AudioEngine.syncMusic();
       el.boardWrap.classList.add("paused");
@@ -1391,7 +1364,6 @@ function showScreen(screenId) {
       state.settings[name] = !state.settings[name];
       saveSettings();
       renderModalSettingsToggles();
-      unlockAudio();
       AudioEngine.syncMusic();
       showToast(settingLabel(name) + (state.settings[name] ? " включены." : " выключены."));
     }

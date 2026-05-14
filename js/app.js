@@ -9,6 +9,23 @@ function syncBoardLayout() {
     window.addEventListener("resize", syncBoardLayout);
     window.addEventListener("orientationchange", () => setTimeout(syncBoardLayout, 120));
 
+    let audioUnlocked = false;
+
+    function unlockAudioOnFirstInteraction() {
+      if (audioUnlocked) return;
+      audioUnlocked = true;
+      unlockAudio();
+
+      document.removeEventListener("pointerdown", unlockAudioOnFirstInteraction, true);
+      document.removeEventListener("click", unlockAudioOnFirstInteraction, true);
+      document.removeEventListener("keydown", unlockAudioOnFirstInteraction, true);
+    }
+
+    document.addEventListener("pointerdown", unlockAudioOnFirstInteraction, { capture: true });
+    document.addEventListener("click", unlockAudioOnFirstInteraction, { capture: true });
+    document.addEventListener("keydown", unlockAudioOnFirstInteraction, { capture: true });
+
+
     el.playBtn.addEventListener("click", startSelectedLevel);
     el.continueBtn.addEventListener("click", continueGame);
     el.pauseBtn.addEventListener("click", pauseGame);
@@ -51,35 +68,15 @@ function syncBoardLayout() {
     function handleAutoPauseLifecycle(event) {
       if (event.type === "pagehide" || document.hidden) {
         autoPauseGame();
+        return;
       }
+
+      state.lifecycleMusicPaused = false;
+      AudioEngine.syncMusic();
     }
 
     document.addEventListener("visibilitychange", handleAutoPauseLifecycle);
     window.addEventListener("pagehide", handleAutoPauseLifecycle);
-
-
-    el.autoPauseOverlay?.addEventListener("pointerdown", (event) => {
-      resumeFromAutoPause(event);
-    }, { capture: true });
-
-    el.autoPauseOverlay?.addEventListener("click", (event) => {
-      if (isBoardInputSuppressed()) {
-        event.preventDefault();
-        event.stopPropagation();
-        event.stopImmediatePropagation?.();
-      }
-    }, { capture: true });
-
-    document.addEventListener("pointerdown", (event) => {
-      if (
-        state.currentScreen === "gameScreen" &&
-        state.gameStatus === "paused" &&
-        state.inlinePauseResumeTap &&
-        !state.currentModal
-      ) {
-        resumeFromAutoPause(event);
-      }
-    }, { capture: true });
 
     document.addEventListener("click", (event) => {
       if (isBoardInputSuppressed()) {

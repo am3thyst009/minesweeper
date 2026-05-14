@@ -210,12 +210,6 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 10px;
     }
-
-    .btn,
-    .level-btn,
-    .icon-btn,
-    .toggle,
-
     .btn,
     .level-btn,
     .icon-btn {
@@ -393,6 +387,7 @@
     }
 
     .board-wrap {
+      
       position: relative;
       padding: 12px;
       border-radius: var(--radius);
@@ -473,15 +468,8 @@
     .board-wrap.board-win-pulse {
       animation: board-win-pulse 520ms ease both;
     }
-
-    @keyframes board-win-pulse {
-      0% { transform: scale(1); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.025); }
-      44% { transform: scale(1.012); box-shadow: inset 0 0 0 1px rgba(136,255,176,0.16), 0 0 34px rgba(53,230,107,0.18); }
-      100% { transform: scale(1); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.025); }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .screen, .modal-backdrop.show, .modal, .auto-pause-overlay.show, .confetti-piece {
+@media (prefers-reduced-motion: reduce) {
+      .screen, .modal-backdrop.show, .modal, .confetti-piece {
         animation-duration: 1ms !important;
         transition-duration: 1ms !important;
       }
@@ -535,33 +523,36 @@
       line-height: 1.35;
     }
 
-    .toggle {
-      flex: 0 0 auto;
-      width: 58px;
-      height: 34px;
-      padding: 3px;
-      border-radius: 999px;
+    .toggle {    flex: 0 0 auto;
+    width: 52px;
+    height: 30px;
+    padding: 0;
+    border-radius: 999px;
       background: #374151;
       transition: background 150ms ease;
-    }
+    min-height: 0;
+    position: relative;
+}
 
     .toggle::before {
       content: "";
       display: block;
-      width: 28px;
-      height: 28px;
-      border-radius: 999px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
       background: white;
       box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
       transition: transform 150ms ease;
-    }
+    top: 4px;
+    left: 4px;
+}
 
     .toggle.on {
       background: var(--accent);
       box-shadow: 0 0 18px rgba(53, 230, 107, 0.2);
     }
 
-    .toggle.on::before { transform: translateX(24px); }
+    .toggle.on::before { transform: translateX(22px); }
 
     .text {
       color: #d6dce8;
@@ -757,12 +748,7 @@
       animation: confetti-fall 950ms ease-in forwards;
       box-shadow: 0 0 12px currentColor;
     }
-
-    @keyframes confetti-fall {
-      to { transform: translateY(110vh) rotate(560deg); opacity: 0.18; }
-    }
-
-    @media (max-width: 430px) {
+@media (max-width: 430px) {
       body { padding: calc(8px + var(--safe-top)) 8px calc(8px + var(--safe-bottom)); }
       .app { min-height: calc(100vh - 16px - var(--safe-top) - var(--safe-bottom)); gap: 12px; }
       .hero { padding: 24px 16px 20px; border-radius: 26px; }
@@ -835,6 +821,7 @@
       }
     }
 
+    /* Планшет и ноутбук: шире оболочка, но поле не растягивается бесконтрольно */
     @media (min-width: 700px) {
       .app {
         max-width: 920px;
@@ -871,51 +858,12 @@
       }
     }
 
+    /* Финальная геометрия под телефон, планшет и ноут */
     @media (min-width: 700px) {
       .board-wrap {
         min-height: auto;
       }
     }
-
-    @media (min-width: 1024px) {
-    }
-
-    .auto-pause-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 65;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: calc(18px + var(--safe-top)) 18px calc(18px + var(--safe-bottom) + var(--salute-bottom-guard));
-      background: rgba(7, 11, 19, 0.52);
-      backdrop-filter: blur(3px);
-      pointer-events: auto;
-      touch-action: pan-x pan-y;
-    }
-
-    .auto-pause-overlay.show {
-      display: flex;
-      animation: modal-fade 140ms ease both;
-    }
-
-    .auto-pause-card {
-      width: min(360px, calc(100vw - 36px));
-      min-height: 112px;
-      border-radius: 24px;
-      display: grid;
-      place-items: center;
-      background:
-        radial-gradient(circle at 50% 0%, rgba(53, 230, 107, 0.16), transparent 52%),
-        rgba(16, 25, 44, 0.94);
-      border: 1px solid rgba(136, 255, 176, 0.18);
-      box-shadow: var(--shadow), 0 0 28px rgba(53, 230, 107, 0.14);
-      color: var(--text);
-      font-size: 30px;
-      font-weight: 950;
-      letter-spacing: -0.04em;
-    }
-
 :root {
   --bg: #050914;
   --bg-2: #081426;
@@ -968,8 +916,7 @@ body::before {
 
 .hero,
 .card,
-.modal,
-.auto-pause-card {
+.modal {
   box-shadow:
     var(--shadow),
     0 0 0 1px rgba(169, 255, 243, 0.05),
@@ -1113,8 +1060,7 @@ body::before {
 
 .hero,
 .card,
-.modal,
-.auto-pause-card {
+.modal {
   box-shadow:
     var(--shadow),
     0 0 0 1px rgba(136, 255, 176, 0.045),
@@ -1337,8 +1283,7 @@ h1 {
 /* CHUNKY PANELS */
 .card,
 .modal,
-.toast,
-.auto-pause-card {
+.toast {
   background:
     linear-gradient(180deg,
       rgba(255,255,255,.05),

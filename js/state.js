@@ -45,8 +45,7 @@ const el = {
       modalTitle: document.getElementById("modalTitle"),
       modalSubtitle: document.getElementById("modalSubtitle"),
       modalBody: document.getElementById("modalBody"),
-      modalCloseBtn: document.getElementById("modalCloseBtn"),
-      autoPauseOverlay: document.getElementById("autoPauseOverlay")
+      modalCloseBtn: document.getElementById("modalCloseBtn")
     };
 
     const state = {
@@ -68,8 +67,8 @@ const el = {
       currentScreen: "menuScreen",
       currentModal: null,
       pauseBeforeModal: false,
-      inlinePauseResumeTap: false,
       suppressBoardInputUntil: 0,
+      lifecycleMusicPaused: false,
       pendingConfirm: null,
       gameId: 0
     };
