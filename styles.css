@@ -798,7 +798,7 @@
     @media (max-width: 430px) {
       :root { --salute-bottom-guard: 58px; }
       #gameScreen .card { margin-bottom: 18px; }
-      .board-wrap { margin-bottom: 8px; }
+      .board-wrap { margin-bottom: 32px; }
     }
 
     @media (max-width: 430px) {
