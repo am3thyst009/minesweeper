@@ -103,12 +103,11 @@ const AudioEngine = (() => {
         const audioElement = document.getElementById('bgMusic');
         if (audioElement) {
           audioElement.pause();
-          audioElement.currentTime = 0;
         }
       }
 
       function syncMusic() {
-        const shouldPlay = Boolean(state.settings.music && state.currentScreen === "gameScreen" && state.gameStatus === "playing");
+        const shouldPlay = Boolean(state.settings.music && !state.lifecycleMusicPaused);
         shouldPlay ? startMusic() : stopMusic();
       }
       return { ensureContext, click, reveal, flag, win, lose, startMusic, stopMusic, syncMusic };
