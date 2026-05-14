@@ -84,6 +84,42 @@ function pauseActiveGameForVoiceNavigation() {
         phrases: ["статистика", "моя статистика", "покажи статистику"],
         reply: "Показываю статистику.",
         run: () => { pauseActiveGameForVoiceNavigation(); closeModal(); showScreen("statsScreen"); }
+      },
+      MUSIC_ON: {
+        title: "Включить музыку",
+        phrases: ["включи музыку", "включить музыку", "запусти музыку", "музыку включи", "музыка", "давай музыку", "хочу музыку"],
+        reply: "Музыка включена.",
+        run: () => { if (!state.settings.music) toggleSetting("music"); }
+      },
+      MUSIC_OFF: {
+        title: "Выключить музыку",
+        phrases: ["выключи музыку", "выключить музыку", "останови музыку", "музыку выключи", "без музыки", "убери музыку", "стоп музыка"],
+        reply: "Музыка выключена.",
+        run: () => { if (state.settings.music) toggleSetting("music"); }
+      },
+      FLAG_MODE_ON: {
+        title: "Включить режим флага",
+        phrases: ["включи режим флага", "режим флага", "включить флаги", "флаг включи", "ставить флаги", "режим маркера", "включи флаг"],
+        reply: "Режим флага включён.",
+        run: () => { if (!state.flagMode) toggleFlagMode(); }
+      },
+      FLAG_MODE_OFF: {
+        title: "Выключить режим флага",
+        phrases: ["выключи режим флага", "выключить флаги", "флаг выключи", "убери флаг", "отключи флаг", "без флага", "отключи режим флага"],
+        reply: "Режим флага выключен.",
+        run: () => { if (state.flagMode) toggleFlagMode(); }
+      },
+      SOUND_ON: {
+        title: "Включить звуки",
+        phrases: ["включи звук", "включить звук", "включи звуки", "звук включи", "звуки включи", "хочу звук", "верни звук"],
+        reply: "Звуки включены.",
+        run: () => { if (!state.settings.sound) toggleSetting("sound"); }
+      },
+      SOUND_OFF: {
+        title: "Выключить звуки",
+        phrases: ["выключи звук", "выключить звук", "выключи звуки", "звук выключи", "звуки выключи", "без звука", "убери звук", "тишина"],
+        reply: "Звуки выключены.",
+        run: () => { if (state.settings.sound) toggleSetting("sound"); }
       }
     };
 
@@ -248,7 +284,7 @@ function pauseActiveGameForVoiceNavigation() {
       const normalized = normalizeSaluteCommand(rawCommand);
       const intent = String(normalized.intent || "").trim().toUpperCase();
       const text = String(normalized.text || "").toLowerCase().trim();
-      const intentAliases = { SHOW_RECORDS: "RECORDS", SHOW_STATS: "STATS", SHOW_SETTINGS: "SETTINGS", OPEN_SETTINGS: "SETTINGS", OPEN_MENU: "MENU" };
+      const intentAliases = { SHOW_RECORDS: "RECORDS", SHOW_STATS: "STATS", SHOW_SETTINGS: "SETTINGS", OPEN_SETTINGS: "SETTINGS", OPEN_MENU: "MENU", ENABLE_MUSIC: "MUSIC_ON", DISABLE_MUSIC: "MUSIC_OFF", TOGGLE_FLAG: "FLAG_MODE_ON", FLAG_ON: "FLAG_MODE_ON", FLAG_OFF: "FLAG_MODE_OFF", ENABLE_SOUND: "SOUND_ON", DISABLE_SOUND: "SOUND_OFF" };
 
       if (intent && SALUTE_INTENTS[intent]) return intent;
       if (intentAliases[intent] && SALUTE_INTENTS[intentAliases[intent]]) return intentAliases[intent];

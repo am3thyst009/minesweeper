@@ -502,3 +502,234 @@ theme: /
                 "type": "text",
                 "text": "Команда не распознана. Скажите: помощь."
             });
+
+    state: MusicOn
+        q!: включи музыку
+        q!: включить музыку
+        q!: запусти музыку
+        q!: музыку включи
+        q!: музыка
+        q!: давай музыку
+        q!: хочу музыку
+        q!: поставь музыку
+        q!: фоновая музыка
+        q!: включи фоновую музыку
+        script:
+            $response.replies = $response.replies || [];
+            $response.replies.push({
+                "type": "raw",
+                "messageName": "ANSWER_TO_USER",
+                "body": {
+                    "items": [
+                        {
+                            "command": {
+                                "type": "smart_app_data",
+                                "smart_app_data": {
+                                    "type": "salute-command",
+                                    "intent": "MUSIC_ON"
+                                },
+                                "action": {
+                                    "type": "salute-command",
+                                    "intent": "MUSIC_ON"
+                                }
+                            }
+                        }
+                    ]
+                }
+            });
+            $response.replies.push({
+                "type": "text",
+                "text": "Музыка включена."
+            });
+
+    state: MusicOff
+        q!: выключи музыку
+        q!: выключить музыку
+        q!: останови музыку
+        q!: музыку выключи
+        q!: без музыки
+        q!: убери музыку
+        q!: стоп музыка
+        q!: отключи музыку
+        q!: убери фоновую музыку
+        q!: выключи фоновую музыку
+        script:
+            $response.replies = $response.replies || [];
+            $response.replies.push({
+                "type": "raw",
+                "messageName": "ANSWER_TO_USER",
+                "body": {
+                    "items": [
+                        {
+                            "command": {
+                                "type": "smart_app_data",
+                                "smart_app_data": {
+                                    "type": "salute-command",
+                                    "intent": "MUSIC_OFF"
+                                },
+                                "action": {
+                                    "type": "salute-command",
+                                    "intent": "MUSIC_OFF"
+                                }
+                            }
+                        }
+                    ]
+                }
+            });
+            $response.replies.push({
+                "type": "text",
+                "text": "Музыка выключена."
+            });
+
+    state: FlagModeOn
+        q!: включи режим флага
+        q!: режим флага
+        q!: включить флаги
+        q!: флаг включи
+        q!: ставить флаги
+        q!: режим маркера
+        q!: включи флаг
+        q!: режим флажка
+        q!: включи флажки
+        script:
+            $response.replies = $response.replies || [];
+            $response.replies.push({
+                "type": "raw",
+                "messageName": "ANSWER_TO_USER",
+                "body": {
+                    "items": [
+                        {
+                            "command": {
+                                "type": "smart_app_data",
+                                "smart_app_data": {
+                                    "type": "salute-command",
+                                    "intent": "FLAG_MODE_ON"
+                                },
+                                "action": {
+                                    "type": "salute-command",
+                                    "intent": "FLAG_MODE_ON"
+                                }
+                            }
+                        }
+                    ]
+                }
+            });
+            $response.replies.push({
+                "type": "text",
+                "text": "Режим флага включён."
+            });
+
+    state: FlagModeOff
+        q!: выключи режим флага
+        q!: выключить флаги
+        q!: флаг выключи
+        q!: убери флаг
+        q!: отключи флаг
+        q!: без флага
+        q!: отключи режим флага
+        q!: выключи флажки
+        q!: убери флажки
+        script:
+            $response.replies = $response.replies || [];
+            $response.replies.push({
+                "type": "raw",
+                "messageName": "ANSWER_TO_USER",
+                "body": {
+                    "items": [
+                        {
+                            "command": {
+                                "type": "smart_app_data",
+                                "smart_app_data": {
+                                    "type": "salute-command",
+                                    "intent": "FLAG_MODE_OFF"
+                                },
+                                "action": {
+                                    "type": "salute-command",
+                                    "intent": "FLAG_MODE_OFF"
+                                }
+                            }
+                        }
+                    ]
+                }
+            });
+            $response.replies.push({
+                "type": "text",
+                "text": "Режим флага выключен."
+            });
+
+    state: SoundOn
+        q!: включи звук
+        q!: включить звук
+        q!: включи звуки
+        q!: звук включи
+        q!: звуки включи
+        q!: хочу звук
+        q!: верни звук
+        q!: звуковые эффекты включи
+        q!: включи звуковые эффекты
+        script:
+            $response.replies = $response.replies || [];
+            $response.replies.push({
+                "type": "raw",
+                "messageName": "ANSWER_TO_USER",
+                "body": {
+                    "items": [
+                        {
+                            "command": {
+                                "type": "smart_app_data",
+                                "smart_app_data": {
+                                    "type": "salute-command",
+                                    "intent": "SOUND_ON"
+                                },
+                                "action": {
+                                    "type": "salute-command",
+                                    "intent": "SOUND_ON"
+                                }
+                            }
+                        }
+                    ]
+                }
+            });
+            $response.replies.push({
+                "type": "text",
+                "text": "Звуки включены."
+            });
+
+    state: SoundOff
+        q!: выключи звук
+        q!: выключить звук
+        q!: выключи звуки
+        q!: звук выключи
+        q!: звуки выключи
+        q!: без звука
+        q!: убери звук
+        q!: тишина
+        q!: звуковые эффекты выключи
+        q!: выключи звуковые эффекты
+        script:
+            $response.replies = $response.replies || [];
+            $response.replies.push({
+                "type": "raw",
+                "messageName": "ANSWER_TO_USER",
+                "body": {
+                    "items": [
+                        {
+                            "command": {
+                                "type": "smart_app_data",
+                                "smart_app_data": {
+                                    "type": "salute-command",
+                                    "intent": "SOUND_OFF"
+                                },
+                                "action": {
+                                    "type": "salute-command",
+                                    "intent": "SOUND_OFF"
+                                }
+                            }
+                        }
+                    ]
+                }
+            });
+            $response.replies.push({
+                "type": "text",
+                "text": "Звуки выключены."
+            });
