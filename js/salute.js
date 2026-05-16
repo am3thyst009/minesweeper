@@ -87,7 +87,7 @@ function pauseActiveGameForVoiceNavigation() {
       },
       MUSIC_ON: {
         title: "Включить музыку",
-        phrases: ["включи музыку", "включить музыку", "запусти музыку", "музыку включи", "музыка", "давай музыку", "хочу музыку"],
+        phrases: ["запусти музыку", "включить музыку", "музыку включи", "музыка", "давай музыку", "хочу музыку"],
         reply: "Музыка включена.",
         run: () => { if (!state.settings.music) toggleSetting("music"); }
       },
@@ -111,7 +111,7 @@ function pauseActiveGameForVoiceNavigation() {
       },
       SOUND_ON: {
         title: "Включить звуки",
-        phrases: ["включи звук", "включить звук", "включи звуки", "звук включи", "звуки включи", "хочу звук", "верни звук"],
+        phrases: ["включи звук", "включи звуки", "звук включи", "звуки включи", "хочу звук", "верни звук"],
         reply: "Звуки включены.",
         run: () => { if (!state.settings.sound) toggleSetting("sound"); }
       },
