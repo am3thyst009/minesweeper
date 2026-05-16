@@ -62,6 +62,8 @@ function syncBoardLayout() {
       if (actionButton) handleModalAction(actionButton.dataset.action);
       const settingButton = event.target.closest("[data-setting]");
       if (settingButton) toggleSetting(settingButton.dataset.setting);
+      const themeButton = event.target.closest("[data-theme-btn]");
+      if (themeButton) setTheme(themeButton.dataset.themeBtn);
     });
 
 
@@ -97,6 +99,8 @@ function syncBoardLayout() {
     });
 
     setupIcons();
+    if (!state.settings.theme) state.settings.theme = "arcade";
+    applyThemeCss();
     newGame("easy");
     state.activeSession = false;
     renderContinueButton();

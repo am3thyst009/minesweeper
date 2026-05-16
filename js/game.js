@@ -32,10 +32,22 @@ function setupIcons() {
           const paddingX = wrapStyles
             ? parseFloat(wrapStyles.paddingLeft) + parseFloat(wrapStyles.paddingRight)
             : 0;
+          const paddingY = wrapStyles
+            ? parseFloat(wrapStyles.paddingTop) + parseFloat(wrapStyles.paddingBottom)
+            : 0;
+
           const availableWidth = Math.max(240, wrapWidth - paddingX);
 
-          cellSize = Math.floor((availableWidth - (level.cols - 1) * gap) / level.cols);
-          cellSize = Math.max(32, Math.min(54, cellSize));
+          const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 720;
+          const wrapTop = el.boardWrap?.getBoundingClientRect?.().top || 0;
+          const bottomGuard = viewport < 430 ? 44 : 28;
+          const availableHeight = Math.max(260, viewportHeight - wrapTop - paddingY - bottomGuard);
+
+          const sizeByWidth = Math.floor((availableWidth - (level.cols - 1) * gap) / level.cols);
+          const sizeByHeight = Math.floor((availableHeight - (level.rows - 1) * gap) / level.rows);
+
+          cellSize = Math.min(sizeByWidth, sizeByHeight);
+          cellSize = Math.max(38, Math.min(56, cellSize));
         } else {
           cellSize = viewport < 380 ? 42 : 44;
         }
@@ -133,7 +145,7 @@ function setupIcons() {
 
       ctx.save();
       ctx.setTransform(boardMetrics.dpr, 0, 0, boardMetrics.dpr, 0, 0);
-      ctx.fillStyle = "#0a101d";
+      ctx.fillStyle = getTheme().boardBg;
       ctx.fillRect(0, 0, width, height);
 
       for (const row of state.board) {
@@ -153,14 +165,15 @@ function setupIcons() {
       const y = baseY + (cellSize - drawSize) / 2;
       const r = Math.max(6, Math.round(drawSize * 0.22));
 
-      let bgTop = "#9aafd8";
-      let bgBottom = "#435a7d";
-      let stroke = "rgba(205,228,255,0.22)";
+      const theme = getTheme();
+      let bgTop = theme.cellClosedTop;
+      let bgBottom = theme.cellClosedBot;
+      let stroke = theme.cellClosedStroke;
       let text = "";
 
       if (cell.isOpen) {
-        bgTop = "#435474";
-        bgBottom = "#2b3853";
+        bgTop = theme.cellOpenTop;
+        bgBottom = theme.cellOpenBot;
         stroke = "rgba(255,255,255,0.075)";
 
         if (cell.isMine) {
@@ -175,8 +188,8 @@ function setupIcons() {
           text = String(cell.neighborMines);
         }
       } else if (cell.isFlagged) {
-        bgTop = "#563044";
-        bgBottom = "#2b1722";
+        bgTop = theme.cellFlagTop;
+        bgBottom = theme.cellFlagBot;
         stroke = "rgba(255,79,104,0.32)";
       }
 
@@ -418,6 +431,7 @@ function showScreen(screenId) {
       closeModal();
       showScreen("gameScreen");
       newGame(levelName);
+      state.suppressBoardInputUntil = Date.now() + 350;
     }
 
     function continueGame() {
@@ -1016,6 +1030,7 @@ function getEmptyOpeningAnalysis() {
     function winGame() {
       state.gameStatus = "won";
       state.lifecycleMusicPaused = false;
+      state.suppressBoardInputUntil = Date.now() + 700;
       state.activeSession = false;
       stopTimer();
       AudioEngine.syncMusic();
@@ -1073,13 +1088,12 @@ function getEmptyOpeningAnalysis() {
       saveLossStats();
       AudioEngine.lose();
       vibrate([60, 35, 90]);
-      el.status.textContent = "";
+      el.status.textContent = "Взрыв. Мина была слишком близко.";
       el.status.className = "status lose";
       renderContinueButton();
 
       revealMinesWave(explodedCell, () => {
         if (state.gameId !== lostGameId || state.gameStatus !== "lost") return;
-        el.status.textContent = "Взрыв. Мина была слишком близко.";
         openResultModal("lose", false);
       });
     }
@@ -1249,6 +1263,7 @@ function getEmptyOpeningAnalysis() {
 
     function openModal({ title, subtitle = "", body = "", closeable = true }) {
       state.currentModal = title;
+      state.modalActionLockUntil = Date.now() + 450;
       el.modalTitle.textContent = title;
       el.modalSubtitle.textContent = subtitle;
       el.modalSubtitle.hidden = !subtitle;
@@ -1261,6 +1276,8 @@ function getEmptyOpeningAnalysis() {
     function closeModal() {
       state.currentModal = null;
       state.confirmReturnToPause = false;
+      state.pendingConfirm = null;
+      state.modalActionLockUntil = 0;
       el.modalBackdrop.classList.remove("show");
       el.modalBackdrop.setAttribute("aria-hidden", "true");
       el.modalBody.innerHTML = "";
@@ -1288,7 +1305,7 @@ function getEmptyOpeningAnalysis() {
 
     function openSettingsModal(returnToPause = false) {
       state.pauseBeforeModal = returnToPause;
-      openModal({ title: "Настройки", body: `<div class="stack">${settingRow("sound", "Звуки", "Игровые эффекты.")}${settingRow("music", "Музыка", "Фоновое сопровождение.")}${settingRow("vibration", "Вибрация", "Короткая отдача.")}<button class="btn btn-secondary" type="button" data-action="back-from-settings">Назад</button></div>` });
+      openModal({ title: "Настройки", body: `<div class="stack">${settingRow("sound", "Звуки", "Игровые эффекты.")}${settingRow("music", "Музыка", "Фоновое сопровождение.")}${settingRow("vibration", "Вибрация", "Короткая отдача.")}${themeRow()}<button class="btn btn-secondary" type="button" data-action="back-from-settings">Назад</button></div>` });
       renderModalSettingsToggles();
     }
 
@@ -1335,6 +1352,7 @@ function getEmptyOpeningAnalysis() {
     }
 
     function handleModalAction(action) {
+      if (Date.now() < (state.modalActionLockUntil || 0)) return;
       if (action === "resume") resumeGame();
       if (action === "restart") requestNewGame();
       if (action === "settings") openSettingsModal(true);
@@ -1404,6 +1422,38 @@ function getEmptyOpeningAnalysis() {
         el.confettiLayer.appendChild(piece);
       }
       setTimeout(() => { el.confettiLayer.innerHTML = ""; }, 1900);
+    }
+
+    
+    function getTheme() {
+      return THEMES[state?.settings?.theme] || THEMES.arcade;
+    }
+
+    function applyThemeCss() {
+      document.documentElement.setAttribute("data-theme", state?.settings?.theme || "arcade");
+    }
+
+    function setTheme(name) {
+      if (!THEMES[name]) return;
+      state.settings.theme = name;
+      saveSettings();
+      applyThemeCss();
+      drawBoard();
+      el.modalBody.querySelectorAll("[data-theme-btn]").forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.themeBtn === name);
+      });
+      showToast(`Тема «${THEMES[name].label}» применена.`);
+    }
+
+    function themeRow() {
+      const current = state?.settings?.theme || "arcade";
+      const buttons = Object.entries(THEMES).map(([key, t]) =>
+        `<button class="theme-btn${current === key ? " active" : ""}" data-theme-btn="${key}" type="button" title="${t.label}">
+          <span class="theme-swatch" style="background:linear-gradient(135deg,${t.cellClosedTop},${t.cellClosedBot})"></span>
+          ${t.label}
+        </button>`
+      ).join("");
+      return `<div class="settings-row theme-row"><div><strong>Тема</strong></div><div class="theme-picker">${buttons}</div></div>`;
     }
 
     function cellKey(row, col) { return `${row}:${col}`; }

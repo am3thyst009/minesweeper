@@ -1,7 +1,7 @@
 "use strict";
 
 function loadSettings() {
-      const defaults = { sound: true, music: false, vibration: true };
+      const defaults = { sound: true, music: false, vibration: true, theme: "arcade" };
       return { ...defaults, ...AppStorage.getJSON(STORAGE_KEYS.settings, {}) };
     }
 
