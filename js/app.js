@@ -1,13 +1,21 @@
 "use strict";
 
+let pendingBoardLayoutFrame = 0;
+
 function syncBoardLayout() {
-      if (!state.board.length) return;
-      applyBoardLayout(LEVELS[state.level]);
+      if (!state.board.length || state.currentScreen !== "gameScreen") return;
+
+      if (pendingBoardLayoutFrame) cancelAnimationFrame(pendingBoardLayoutFrame);
+      pendingBoardLayoutFrame = requestAnimationFrame(() => {
+        pendingBoardLayoutFrame = 0;
+        applyBoardLayout(LEVELS[state.level]);
+        drawBoard();
+      });
     }
 
     window.handleSaluteCommand = handleSaluteCommand;
-    window.addEventListener("resize", syncBoardLayout);
-    window.addEventListener("orientationchange", () => setTimeout(syncBoardLayout, 120));
+    window.addEventListener("resize", syncBoardLayout, { passive: true });
+    window.addEventListener("orientationchange", () => setTimeout(syncBoardLayout, 120), { passive: true });
 
     let audioUnlocked = false;
 

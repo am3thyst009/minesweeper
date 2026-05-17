@@ -91,17 +91,17 @@ const AudioEngine = (() => {
 
       function startMusic() {
         if (!state.settings.music) return;
-        const audioElement = document.getElementById('bgMusic');
-        if (audioElement) {
-          audioElement.volume = 0.075;
-          const playPromise = audioElement.play();
-          playPromise?.catch?.(() => {});
-        }
+        const audioElement = document.getElementById("bgMusic");
+        if (!audioElement || !audioElement.paused) return;
+
+        audioElement.volume = 0.075;
+        const playPromise = audioElement.play();
+        playPromise?.catch?.(() => {});
       }
 
       function stopMusic() {
-        const audioElement = document.getElementById('bgMusic');
-        if (audioElement) {
+        const audioElement = document.getElementById("bgMusic");
+        if (audioElement && !audioElement.paused) {
           audioElement.pause();
         }
       }

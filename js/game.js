@@ -1108,8 +1108,9 @@ function getEmptyOpeningAnalysis() {
         return;
       }
 
-      const batchSize = isMobilePerfMode() ? 4 : 2;
-      const batchDelay = isMobilePerfMode() ? 52 : 36;
+      const isMobile = isMobilePerfMode();
+      const batchSize = isMobile ? 4 : 2;
+      const batchDelay = isMobile ? 52 : 36;
       let index = 0;
 
       function revealBatch() {
