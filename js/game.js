@@ -830,22 +830,13 @@ function getEmptyOpeningAnalysis() {
       return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
     }
 
-    function pulseBoard(type = "win") {
+    function pulseWinBoard() {
       if (prefersReducedMotion()) return;
+
       el.boardWrap.classList.remove("board-win-pulse");
       void el.boardWrap.offsetWidth;
-      if (type === "win") {
-        el.boardWrap.classList.add("board-win-pulse");
-        setTimeout(() => el.boardWrap.classList.remove("board-win-pulse"), 560);
-        return;
-      }
-
-      el.boardWrap.animate([
-        { transform: "translateX(0)" },
-        { transform: "translateX(-5px)" },
-        { transform: "translateX(5px)" },
-        { transform: "translateX(0)" }
-      ], { duration: 230, easing: "ease-out" });
+      el.boardWrap.classList.add("board-win-pulse");
+      setTimeout(() => el.boardWrap.classList.remove("board-win-pulse"), 560);
     }
 
     function openCell(cell) {
@@ -1043,7 +1034,7 @@ function getEmptyOpeningAnalysis() {
       updateBestTime();
       AudioEngine.win();
       vibrate([35, 40, 35]);
-      pulseBoard("win");
+      pulseWinBoard();
       celebrateVictory();
       showConfetti();
       el.status.textContent = wasRecord ? `Победа! Новый рекорд: ${state.seconds} сек.` : `Победа! Время: ${state.seconds} сек.`;
@@ -1060,14 +1051,6 @@ function getEmptyOpeningAnalysis() {
         { backgroundColor: "#2a0005" },
         { backgroundColor: "#070b13" }
       ], { duration: 300 });
-
-      document.body.animate([
-        { transform: "translateX(0)" },
-        { transform: "translateX(-6px)" },
-        { transform: "translateX(6px)" },
-        { transform: "translateX(0)" }
-      ], { duration: 220 });
-      pulseBoard("lose");
       state.gameStatus = "lost";
       state.lifecycleMusicPaused = false;
       state.activeSession = false;
@@ -1401,7 +1384,7 @@ function getEmptyOpeningAnalysis() {
 
     function celebrateVictory() {
       if (prefersReducedMotion()) return;
-      pulseBoard("win");
+      pulseWinBoard();
     }
 
     function showConfetti() {
