@@ -26,7 +26,14 @@ function pauseActiveGameForVoiceNavigation() {
         title: "Продолжить",
         phrases: ["продолжить", "продолжи", "вернуться к игре", "снять с паузы"],
         reply: "Продолжаю игру.",
-        run: () => { if (canContinueSession()) continueGame(); }
+        run: () => {
+          if (state.currentScreen === "gameScreen") {
+            resumeGame();
+            return;
+          }
+
+          if (canContinueSession()) continueGame();
+        }
       },
       MENU: {
         title: "Главное меню",
