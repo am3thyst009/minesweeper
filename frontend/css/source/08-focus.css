@@ -1,0 +1,77 @@
+:root,
+html[data-theme='arcade'] {
+  --remote-focus-color: rgba(212, 255, 118, 0.98);
+  --remote-focus-inner: rgba(255, 255, 255, 0.92);
+  --remote-focus-outer: rgba(8, 10, 20, 0.94);
+  --remote-focus-shadow: rgba(167, 255, 63, 0.72);
+  --remote-focus-flag-color: rgba(255, 142, 160, 0.98);
+  --remote-focus-flag-shadow: rgba(255, 90, 111, 0.7);
+  --remote-ui-focus-color: rgba(212, 255, 118, 0.96);
+  --remote-ui-focus-ring: rgba(167, 255, 63, 0.24);
+  --remote-ui-focus-glow: rgba(167, 255, 63, 0.36);
+}
+
+html[data-theme='blue'] {
+  --remote-focus-color: rgba(170, 187, 255, 0.98);
+  --remote-focus-inner: rgba(255, 255, 255, 0.92);
+  --remote-focus-outer: rgba(3, 6, 16, 0.96);
+  --remote-focus-shadow: rgba(64, 96, 240, 0.74);
+  --remote-focus-flag-color: rgba(255, 142, 160, 0.98);
+  --remote-focus-flag-shadow: rgba(255, 90, 111, 0.66);
+  --remote-ui-focus-color: rgba(170, 187, 255, 0.96);
+  --remote-ui-focus-ring: rgba(64, 96, 240, 0.28);
+  --remote-ui-focus-glow: rgba(64, 96, 240, 0.4);
+}
+
+html[data-theme='teal'] {
+  --remote-focus-color: rgba(120, 255, 240, 0.98);
+  --remote-focus-inner: rgba(255, 255, 255, 0.92);
+  --remote-focus-outer: rgba(3, 13, 16, 0.96);
+  --remote-focus-shadow: rgba(42, 196, 176, 0.76);
+  --remote-focus-flag-color: rgba(255, 142, 160, 0.98);
+  --remote-focus-flag-shadow: rgba(255, 90, 111, 0.66);
+  --remote-ui-focus-color: rgba(120, 255, 240, 0.96);
+  --remote-ui-focus-ring: rgba(42, 196, 176, 0.28);
+  --remote-ui-focus-glow: rgba(42, 196, 176, 0.4);
+}
+
+html[data-theme='crimson'] {
+  --remote-focus-color: rgba(255, 142, 160, 0.98);
+  --remote-focus-inner: rgba(255, 255, 255, 0.92);
+  --remote-focus-outer: rgba(18, 4, 8, 0.96);
+  --remote-focus-shadow: rgba(255, 90, 111, 0.74);
+  --remote-focus-flag-color: rgba(255, 216, 77, 0.98);
+  --remote-focus-flag-shadow: rgba(255, 184, 56, 0.66);
+  --remote-ui-focus-color: rgba(255, 142, 160, 0.96);
+  --remote-ui-focus-ring: rgba(255, 90, 111, 0.28);
+  --remote-ui-focus-glow: rgba(255, 90, 111, 0.4);
+}
+
+button:focus-visible,
+[tabindex]:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--remote-ui-focus-color, var(--remote-focus-color));
+  outline-offset: 3px;
+  box-shadow:
+    0 0 0 2px var(--remote-focus-outer, rgba(8, 10, 20, 0.94)),
+    0 0 0 7px var(--remote-ui-focus-ring, rgba(167, 255, 63, 0.22)),
+    0 0 18px var(--remote-ui-focus-glow, rgba(167, 255, 63, 0.32)),
+    var(--shadow-soft);
+}
+
+.icon-btn:focus-visible,
+.btn:focus-visible,
+.level-btn:focus-visible,
+.theme-btn:focus-visible,
+.modal-close:focus-visible {
+  border-color: var(--remote-ui-focus-color, var(--remote-focus-color));
+}
+
+.modal button:focus-visible,
+.screen button:focus-visible {
+  position: relative;
+  z-index: 1;
+}

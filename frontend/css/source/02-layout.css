@@ -1,0 +1,82 @@
+/* структура экранов */
+.app {
+  width: min(100%, var(--app-width-menu));
+  min-height: calc(100vh - 28px - var(--safe-top) - var(--safe-bottom) - var(--salute-bottom-guard));
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-gap);
+}
+
+.screen {
+  display: none;
+  width: 100%;
+  animation: screen-in 210ms ease both;
+}
+
+.screen.active {
+  display: block;
+}
+
+#gameScreen,
+#gameScreen .card {
+  width: 100%;
+}
+
+.stack {
+  display: grid;
+  gap: 12px;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.level-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.topbar {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) 48px 48px;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.topbar.simple {
+  grid-template-columns: 48px minmax(0, 1fr) 48px;
+}
+
+.game-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.result-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.list {
+  display: grid;
+  gap: 10px;
+}
+
+.pill-row,
+.theme-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pill-row {
+  margin-top: 12px;
+}

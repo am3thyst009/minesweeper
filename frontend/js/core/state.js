@@ -72,3 +72,6 @@ const el = {
       pendingConfirm: null,
       gameId: 0
     };
+
+window.MinesweeperState = state;
+window.MinesweeperElements = el;

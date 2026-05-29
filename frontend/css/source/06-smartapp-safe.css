@@ -1,0 +1,113 @@
+/* safe-area и модальные окна */
+
+:root {
+  --smartapp-assistant-inset: 0px;
+  --smartapp-assistant-gap: 8px;
+  --smartapp-screen-bottom-space: 0px;
+  --modal-viewport-gap: 16px;
+}
+
+
+@media (max-width: 430px) {
+  :root {
+    --smartapp-assistant-inset: 80px;
+    --smartapp-screen-bottom-space: calc(var(--smartapp-assistant-inset) + var(--smartapp-assistant-gap));
+    --modal-viewport-gap: 12px;
+  }
+}
+
+@media (min-width: 431px) and (max-width: 699px) {
+  :root {
+    --smartapp-assistant-inset: 80px;
+    --smartapp-screen-bottom-space: calc(var(--smartapp-assistant-inset) + var(--smartapp-assistant-gap));
+    --modal-viewport-gap: 12px;
+  }
+}
+
+
+@media (min-width: 700px) and (max-height: 520px) {
+  :root {
+    --smartapp-assistant-inset: 80px;
+    --smartapp-screen-bottom-space: calc(var(--smartapp-assistant-inset) + 6px);
+    --modal-viewport-gap: 10px;
+  }
+}
+
+
+#menuScreen.active,
+#gameScreen.active {
+  padding-bottom: var(--smartapp-screen-bottom-space);
+}
+
+#recordsScreen.active,
+#statsScreen.active {
+  padding-bottom: max(10px, calc(var(--smartapp-screen-bottom-space) * 0.35));
+}
+
+
+.modal-backdrop {
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: calc(var(--modal-viewport-gap) + var(--safe-top)) var(--modal-viewport-gap)
+    calc(var(--modal-viewport-gap) + var(--safe-bottom) + var(--smartapp-assistant-inset));
+  scroll-padding-top: calc(var(--modal-viewport-gap) + var(--safe-top));
+}
+
+.modal-backdrop.modal-compact {
+  align-items: center;
+}
+
+.modal-backdrop.modal-tall {
+  align-items: flex-start;
+}
+
+.modal {
+  max-height: calc(
+    100svh - var(--safe-top) - var(--safe-bottom) - var(--smartapp-assistant-inset) - (var(--modal-viewport-gap) * 2)
+  );
+  margin: 0 auto;
+}
+
+.modal-backdrop.modal-tall .modal {
+  margin-top: 0;
+}
+
+
+.modal-backdrop.modal-result {
+  align-items: center;
+  padding-bottom: calc(
+    var(--modal-viewport-gap) + var(--safe-bottom) + var(--smartapp-assistant-inset) + var(--result-modal-assistant-extra, 42px)
+  );
+}
+
+.modal-backdrop.modal-result .modal {
+  max-height: calc(
+    100svh - var(--safe-top) - var(--safe-bottom) - var(--smartapp-assistant-inset) - var(--result-modal-assistant-extra, 42px) - (var(--modal-viewport-gap) * 2)
+  );
+}
+
+@media (max-width: 699px), (min-width: 700px) and (max-height: 520px) {
+  :root {
+    --result-modal-assistant-extra: 48px;
+  }
+
+  .modal-backdrop.modal-result .modal-actions {
+    padding-bottom: 4px;
+  }
+}
+
+@supports not (height: 100svh) {
+  .modal {
+    max-height: calc(
+      100vh - var(--safe-top) - var(--safe-bottom) - var(--smartapp-assistant-inset) - (var(--modal-viewport-gap) * 2)
+    );
+  }
+
+  .modal-backdrop.modal-result .modal {
+    max-height: calc(
+      100vh - var(--safe-top) - var(--safe-bottom) - var(--smartapp-assistant-inset) - var(--result-modal-assistant-extra, 42px) - (var(--modal-viewport-gap) * 2)
+    );
+  }
+}

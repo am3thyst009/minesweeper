@@ -1,0 +1,234 @@
+/* переменные и темы */
+:root {
+  color-scheme: dark;
+
+  
+  --app-width-menu: 580px;
+  --app-width-tablet: 920px;
+  --app-width-desktop: 1040px;
+  --app-width-wide: 1240px;
+  --app-width-ultra: 1680px;
+
+  --space-page-x: 14px;
+  --space-page-y: 14px;
+  --space-card: 16px;
+  --space-gap: 14px;
+  --radius-lg: 28px;
+  --radius-md: 24px;
+  --radius-sm: 16px;
+  --board-gap: 5px;
+
+  
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --salute-top-guard: 0px;
+  --salute-bottom-guard: 44px;
+
+  
+  --danger: #ff5a6f;
+  --danger-2: #ff8ea0;
+  --danger-soft: rgba(255, 90, 111, 0.18);
+  --warning: #ffd84d;
+
+  --remote-focus-color: rgba(214, 255, 96, 0.98);
+  --remote-focus-inner: rgba(255, 255, 255, 0.86);
+  --remote-focus-shadow: rgba(180, 255, 56, 0.78);
+  --remote-focus-flag-color: rgba(255, 111, 131, 0.96);
+  --remote-focus-flag-shadow: rgba(255, 79, 104, 0.75);
+}
+
+:root,
+html[data-theme='arcade'] {
+  --theme-bg: radial-gradient(circle at 14% 0%, rgba(167, 255, 63, 0.18), transparent 28%),
+    radial-gradient(circle at 90% 10%, rgba(99, 213, 255, 0.15), transparent 30%),
+    radial-gradient(circle at 50% 100%, rgba(177, 140, 255, 0.12), transparent 42%),
+    linear-gradient(180deg, #111425 0%, #171b31 100%);
+
+  --theme-text: #f7f8ff;
+  --theme-muted: #c1c7ea;
+  --theme-muted-2: #8c95bf;
+
+  --theme-accent: #a7ff3f;
+  --theme-accent-2: #d4ff76;
+  --theme-accent-3: #f3ffd5;
+  --theme-accent-soft: rgba(167, 255, 63, 0.18);
+  --remote-focus-color: rgba(214, 255, 96, 0.98);
+  --remote-focus-shadow: rgba(180, 255, 56, 0.78);
+  --remote-focus-flag-color: rgba(255, 111, 131, 0.96);
+  --remote-focus-flag-shadow: rgba(255, 79, 104, 0.75);
+
+  --theme-border: rgba(255, 255, 255, 0.12);
+  --theme-border-strong: rgba(255, 255, 255, 0.08);
+  --theme-shadow: 0 16px 34px rgba(0, 0, 0, 0.36);
+  --theme-glow: 0 0 24px rgba(167, 255, 63, 0.18);
+
+  --theme-hero-bg: linear-gradient(145deg, rgba(255, 255, 255, 0.07), transparent 34%),
+    linear-gradient(180deg, #2a3157, #1b213f);
+  --theme-hero-grid-bg: linear-gradient(180deg, rgba(167, 255, 63, 0.28), rgba(167, 255, 63, 0.08));
+  --theme-hero-grid-danger-bg: linear-gradient(180deg, rgba(255, 90, 111, 0.28), rgba(255, 90, 111, 0.08));
+  --theme-hero-icon-bg: radial-gradient(circle at 35% 30%, rgba(212, 255, 118, 0.22), transparent 40%),
+    linear-gradient(180deg, #394276, #252c52);
+
+  --theme-panel-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 42%), #242b4f;
+  --theme-control-bg: linear-gradient(180deg, #404c86, #313b69);
+  --theme-control-text: #f7f8ff;
+  --theme-primary-bg: linear-gradient(180deg, #d4ff76, #a7ff3f);
+  --theme-primary-text: #172004;
+  --theme-primary-shadow: 0 10px 22px rgba(167, 255, 63, 0.22), 0 0 18px rgba(167, 255, 63, 0.12);
+
+  --theme-stat-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 40%), #1f2644;
+  --theme-status-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 40%), #1f2644;
+  --theme-board-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 50%), #14192f;
+  --theme-row-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 44%), #20274a;
+  --theme-pill-bg: rgba(167, 255, 63, 0.12);
+
+  --scrollbar-track: rgba(255, 255, 255, 0.045);
+  --scrollbar-thumb: rgba(212, 255, 118, 0.36);
+  --scrollbar-thumb-hover: rgba(212, 255, 118, 0.54);
+  --scrollbar-thumb-border: rgba(20, 25, 47, 0.92);
+}
+
+
+html[data-theme='blue'] {
+  --theme-bg: radial-gradient(circle at 18% 0%, rgba(64, 96, 240, 0.18), transparent 32%),
+    radial-gradient(circle at 90% 20%, rgba(80, 120, 200, 0.12), transparent 34%),
+    radial-gradient(circle at 50% 100%, rgba(50, 80, 160, 0.1), transparent 42%),
+    linear-gradient(180deg, #05070e 0%, #0a0e18 100%);
+
+  --theme-text: #f0f3ff;
+  --theme-muted: #a0aac9;
+  --theme-muted-2: #5c6a8c;
+  --theme-accent: #1840c0;
+  --theme-accent-2: #4060f0;
+  --theme-accent-3: #aabbff;
+  --theme-accent-soft: rgba(64, 96, 240, 0.16);
+  --remote-focus-color: rgba(112, 184, 255, 0.98);
+  --remote-focus-shadow: rgba(64, 144, 255, 0.72);
+  --remote-focus-flag-color: rgba(255, 128, 168, 0.96);
+  --remote-focus-flag-shadow: rgba(255, 78, 126, 0.72);
+  --theme-border: rgba(160, 176, 255, 0.12);
+  --theme-border-strong: rgba(160, 176, 255, 0.14);
+  --theme-shadow: 0 24px 58px rgba(0, 0, 0, 0.52);
+  --theme-glow: 0 0 28px rgba(64, 96, 240, 0.22);
+
+  --theme-hero-bg: linear-gradient(145deg, rgba(255, 255, 255, 0.07), transparent 30%),
+    radial-gradient(circle at 20% 15%, rgba(64, 96, 240, 0.3), transparent 34%),
+    radial-gradient(circle at 90% 80%, rgba(80, 120, 200, 0.16), transparent 36%), rgba(10, 16, 30, 0.88);
+  --theme-hero-grid-bg: linear-gradient(180deg, rgba(64, 96, 240, 0.3), rgba(64, 96, 240, 0.05));
+  --theme-hero-grid-danger-bg: linear-gradient(180deg, rgba(80, 120, 200, 0.26), rgba(80, 120, 200, 0.04));
+  --theme-hero-icon-bg: radial-gradient(circle at 35% 25%, rgba(170, 187, 255, 0.35), transparent 35%), rgba(5, 10, 20, 0.72);
+
+  --theme-panel-bg: linear-gradient(150deg, rgba(255, 255, 255, 0.06), transparent 40%), #080e1e;
+  --theme-control-bg: linear-gradient(180deg, #17244a, #0e1630);
+  --theme-control-text: #f0f3ff;
+  --theme-primary-bg: linear-gradient(180deg, #4060f0, #1840c0);
+  --theme-primary-text: #f0f3ff;
+  --theme-primary-shadow: 0 14px 30px rgba(24, 64, 192, 0.34), 0 0 24px rgba(64, 96, 240, 0.22);
+
+  --theme-stat-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 40%), #101936;
+  --theme-status-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 40%), #101936;
+  --theme-board-bg: radial-gradient(circle at 50% 0%, rgba(64, 96, 240, 0.09), transparent 42%), #05070e;
+  --theme-row-bg: rgba(14, 22, 44, 0.92);
+  --theme-pill-bg: rgba(64, 96, 240, 0.14);
+
+  --scrollbar-track: rgba(160, 176, 255, 0.07);
+  --scrollbar-thumb: rgba(64, 96, 240, 0.48);
+  --scrollbar-thumb-hover: rgba(96, 124, 255, 0.7);
+  --scrollbar-thumb-border: rgba(5, 7, 14, 0.92);
+}
+
+
+html[data-theme='teal'] {
+  --theme-bg: radial-gradient(circle at 18% 0%, rgba(42, 196, 176, 0.18), transparent 32%),
+    radial-gradient(circle at 90% 18%, rgba(99, 213, 255, 0.12), transparent 34%),
+    radial-gradient(circle at 50% 100%, rgba(120, 255, 220, 0.08), transparent 42%),
+    linear-gradient(180deg, #061014 0%, #0b171c 100%);
+
+  --theme-text: #effffc;
+  --theme-muted: #a9d9d3;
+  --theme-muted-2: #6f9c96;
+  --theme-accent: #2ac4b0;
+  --theme-accent-2: #78fff0;
+  --theme-accent-3: #d8fff9;
+  --theme-accent-soft: rgba(42, 196, 176, 0.17);
+  --remote-focus-color: rgba(120, 255, 240, 0.98);
+  --remote-focus-shadow: rgba(42, 196, 176, 0.76);
+  --remote-focus-flag-color: rgba(255, 126, 155, 0.96);
+  --remote-focus-flag-shadow: rgba(255, 80, 120, 0.72);
+  --theme-border: rgba(169, 255, 243, 0.12);
+  --theme-border-strong: rgba(169, 255, 243, 0.14);
+  --theme-shadow: 0 24px 58px rgba(0, 0, 0, 0.46);
+  --theme-glow: 0 0 28px rgba(42, 196, 176, 0.2);
+
+  --theme-hero-bg: linear-gradient(145deg, rgba(255, 255, 255, 0.07), transparent 32%),
+    radial-gradient(circle at 20% 15%, rgba(42, 196, 176, 0.3), transparent 34%), rgba(8, 22, 26, 0.9);
+  --theme-hero-grid-bg: linear-gradient(180deg, rgba(42, 196, 176, 0.28), rgba(42, 196, 176, 0.06));
+  --theme-hero-grid-danger-bg: linear-gradient(180deg, rgba(99, 213, 255, 0.24), rgba(99, 213, 255, 0.05));
+  --theme-hero-icon-bg: radial-gradient(circle at 35% 25%, rgba(216, 255, 249, 0.28), transparent 35%), #102a2f;
+
+  --theme-panel-bg: linear-gradient(150deg, rgba(255, 255, 255, 0.055), transparent 40%), #11282d;
+  --theme-control-bg: linear-gradient(180deg, #1b4a50, #15363a);
+  --theme-control-text: #effffc;
+  --theme-primary-bg: linear-gradient(180deg, #78fff0, #2ac4b0);
+  --theme-primary-text: #041a17;
+  --theme-primary-shadow: 0 14px 30px rgba(42, 196, 176, 0.3), 0 0 24px rgba(42, 196, 176, 0.18);
+
+  --theme-stat-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 40%), #0d2226;
+  --theme-status-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 40%), #0d2226;
+  --theme-board-bg: radial-gradient(circle at 50% 0%, rgba(42, 196, 176, 0.09), transparent 42%), #060e14;
+  --theme-row-bg: rgba(15, 38, 42, 0.92);
+  --theme-pill-bg: rgba(42, 196, 176, 0.14);
+
+  --scrollbar-track: rgba(169, 255, 243, 0.07);
+  --scrollbar-thumb: rgba(42, 196, 176, 0.46);
+  --scrollbar-thumb-hover: rgba(120, 255, 240, 0.64);
+  --scrollbar-thumb-border: rgba(6, 14, 20, 0.92);
+}
+
+
+html[data-theme='crimson'] {
+  --theme-bg: radial-gradient(circle at 18% 0%, rgba(255, 90, 111, 0.16), transparent 32%),
+    radial-gradient(circle at 90% 18%, rgba(255, 142, 160, 0.12), transparent 34%),
+    radial-gradient(circle at 50% 100%, rgba(255, 90, 111, 0.08), transparent 42%),
+    linear-gradient(180deg, #120507 0%, #19090d 100%);
+
+  --theme-text: #fff4f6;
+  --theme-muted: #e0aeb6;
+  --theme-muted-2: #a46d77;
+  --theme-accent: #ff5a6f;
+  --theme-accent-2: #ff8ea0;
+  --theme-accent-3: #ffd3da;
+  --theme-accent-soft: rgba(255, 90, 111, 0.17);
+  --remote-focus-color: rgba(255, 142, 160, 0.98);
+  --remote-focus-shadow: rgba(255, 90, 111, 0.76);
+  --remote-focus-flag-color: rgba(255, 216, 77, 0.96);
+  --remote-focus-flag-shadow: rgba(255, 184, 56, 0.72);
+  --theme-border: rgba(255, 170, 187, 0.12);
+  --theme-border-strong: rgba(255, 170, 187, 0.14);
+  --theme-shadow: 0 24px 58px rgba(0, 0, 0, 0.48);
+  --theme-glow: 0 0 28px rgba(255, 90, 111, 0.18);
+
+  --theme-hero-bg: linear-gradient(145deg, rgba(255, 255, 255, 0.07), transparent 32%),
+    radial-gradient(circle at 20% 15%, rgba(255, 90, 111, 0.27), transparent 34%), rgba(36, 11, 17, 0.9);
+  --theme-hero-grid-bg: linear-gradient(180deg, rgba(255, 90, 111, 0.28), rgba(255, 90, 111, 0.06));
+  --theme-hero-grid-danger-bg: linear-gradient(180deg, rgba(255, 142, 160, 0.24), rgba(255, 142, 160, 0.05));
+  --theme-hero-icon-bg: radial-gradient(circle at 35% 25%, rgba(255, 211, 218, 0.28), transparent 35%), #32121a;
+
+  --theme-panel-bg: linear-gradient(150deg, rgba(255, 255, 255, 0.055), transparent 40%), #2a121a;
+  --theme-control-bg: linear-gradient(180deg, #5b2531, #3d1720);
+  --theme-control-text: #fff4f6;
+  --theme-primary-bg: linear-gradient(180deg, #ff8ea0, #ff5a6f);
+  --theme-primary-text: #25050b;
+  --theme-primary-shadow: 0 14px 30px rgba(255, 90, 111, 0.28), 0 0 24px rgba(255, 90, 111, 0.16);
+
+  --theme-stat-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 40%), #241018;
+  --theme-status-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 40%), #241018;
+  --theme-board-bg: radial-gradient(circle at 50% 0%, rgba(255, 90, 111, 0.09), transparent 42%), #0e0507;
+  --theme-row-bg: rgba(42, 18, 26, 0.92);
+  --theme-pill-bg: rgba(255, 90, 111, 0.14);
+
+  --scrollbar-track: rgba(255, 170, 187, 0.07);
+  --scrollbar-thumb: rgba(255, 90, 111, 0.46);
+  --scrollbar-thumb-hover: rgba(255, 142, 160, 0.66);
+  --scrollbar-thumb-border: rgba(14, 5, 7, 0.92);
+}

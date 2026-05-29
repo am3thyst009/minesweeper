@@ -1,0 +1,69 @@
+/* анимации */
+@keyframes screen-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes modal-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes board-win-pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 16px 30px rgba(0, 0, 0, 0.3), 0 0 0 rgba(167, 255, 63, 0);
+  }
+
+  42% {
+    transform: scale(1.01);
+    box-shadow: 0 16px 30px rgba(0, 0, 0, 0.3), 0 0 34px var(--theme-glow);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow: 0 16px 30px rgba(0, 0, 0, 0.3), 0 0 0 rgba(167, 255, 63, 0);
+  }
+}
+
+.board-wrap.board-win-pulse {
+  animation: board-win-pulse 520ms ease both;
+}
+
+@keyframes confetti-fall {
+  0% {
+    opacity: 0;
+    transform: translateY(-18px) rotate(0deg) scale(0.8);
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.12;
+    transform: translateY(112vh) rotate(680deg) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .screen,
+  .modal-backdrop.show,
+  .modal,
+  .confetti-piece {
+    animation-duration: 1ms;
+    transition-duration: 1ms;
+  }
+}
